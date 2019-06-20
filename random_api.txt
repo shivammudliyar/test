@@ -1,0 +1,77 @@
+program to fetch data using random api
+
+index.html htdoc/api_program/index.html
+
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Random author generator app</title>
+	</head>
+<body>
+			<h1>Authors</h1>
+			<ul id="authors">
+		
+			</ul>
+
+
+</body>
+<script src="script.js"></script>
+</html>
+
+
+
+script.js htdoc/api_program/script.js
+
+function createNode(element)
+{
+	return document.createElement(element);
+}
+
+function append(parent,el)
+{
+return parent.appendChild(el);
+}
+
+const ul=document.getElementById("authors");
+
+const url='https://randomuser.me/api/?results=10'; // displaying 10 random authors
+
+//https://randomuser.me/api/
+
+fetch(url)
+.then((resp) => resp.json())
+.then(function(data){
+					let authors= data.results;
+
+					return authors.map(function(author){ // mep is a fuction that process data
+
+									let li= createNode('li'),
+									img =  createNode('img'),
+									span=createNode('span');
+
+									img.src=author.picture.medium;
+									span.innerHTML=`${author.name.first} 
+									${author.name.last}`;
+
+									append(li,img);
+									append(li,span);
+									append(ul,li);
+								})
+
+
+	})
+
+.catch(function(error){
+
+					console.log(JSON.stringify(error));
+
+				})
+
+
+
+
+
+
+
+
